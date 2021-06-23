@@ -58,7 +58,7 @@ WareSrcManager::WareSrcManager() :
 {
   openfluid::base::Environment::init();
 
-  switchWorkspace(openfluid::base::PreferencesManager::instance()->getBuilderWorkspacePath());
+  switchWorkspace(QString::fromStdString(openfluid::base::PreferencesManager::instance()->getCurrentWorkspacePath()));
 }
 
 
@@ -78,6 +78,8 @@ WareSrcManager::~WareSrcManager()
 
 void WareSrcManager::switchWorkspace(const QString& NewAbsoluteWorkspacePath)
 {
+  // #prettycode to move/mix with WorkspaceManager
+
   m_WorkspacePath = QDir(NewAbsoluteWorkspacePath).absolutePath();
 
   m_WaresdevPath = QDir(m_WorkspacePath).absoluteFilePath(m_WaresdevDirName);
@@ -126,7 +128,7 @@ QString WareSrcManager::getWarePath(const QString& WareID, openfluid::ware::Ware
 {
   openfluid::ware::WareType Type;
 
-  switch (OFWareType)
+  switch (OFWareType)  // #prettycode where is BUILDEREXT ?
   {
     case openfluid::ware::WareType::SIMULATOR:
       Type = openfluid::ware::WareType::SIMULATOR;
